@@ -1,0 +1,80 @@
+{
+  "$id": "https://schemas.antora.org/site-manifest/1-0-0/draft-01",
+  "generated": "2023-07-03T22:12:21.969Z",
+  "url": "https://rwinch.github.io/spring-authorization-server",
+  "components": {
+    "authorization-server": {
+      "title": "Spring Authorization Server",
+      "latest": "1.2.0",
+      "versions": {
+        "1.2.0": {
+          "prerelease": true,
+          "displayVersion": "1.2.0-SNAPSHOT",
+          "url": "/index.html",
+          "pages": [
+            {
+              "path": "index.adoc",
+              "url": "/index.html",
+              "title": "Overview"
+            },
+            {
+              "path": "configuration-model.adoc",
+              "url": "/configuration-model.html",
+              "title": "Configuration Model"
+            },
+            {
+              "path": "core-model-components.adoc",
+              "url": "/core-model-components.html",
+              "title": "Core Model / Components"
+            },
+            {
+              "path": "getting-help.adoc",
+              "url": "/getting-help.html",
+              "title": "Getting Help"
+            },
+            {
+              "path": "getting-started.adoc",
+              "url": "/getting-started.html",
+              "title": "Getting Started"
+            },
+            {
+              "path": "guides/how-to-ext-grant-type.adoc",
+              "url": "/guides/how-to-ext-grant-type.html",
+              "title": "How-to: Implement an Extension Authorization Grant Type"
+            },
+            {
+              "path": "guides/how-to-jpa.adoc",
+              "url": "/guides/how-to-jpa.html",
+              "title": "How-to: Implement core services with JPA"
+            },
+            {
+              "path": "guides/how-to-pkce.adoc",
+              "url": "/guides/how-to-pkce.html",
+              "title": "How-to: Authenticate using a Single Page Application with PKCE"
+            },
+            {
+              "path": "guides/how-to-social-login.adoc",
+              "url": "/guides/how-to-social-login.html",
+              "title": "How-to: Authenticate using Social Login"
+            },
+            {
+              "path": "guides/how-to-userinfo.adoc",
+              "url": "/guides/how-to-userinfo.html",
+              "title": "How-to: Customize the OpenID Connect 1.0 UserInfo response"
+            },
+            {
+              "path": "how-to.adoc",
+              "url": "/how-to.html",
+              "title": "How-to Guides"
+            },
+            {
+              "path": "protocol-endpoints.adoc",
+              "url": "/protocol-endpoints.html",
+              "title": "Protocol Endpoints"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

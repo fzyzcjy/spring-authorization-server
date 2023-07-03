@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Core Model / Components :: Spring Authorization Server</title>
+    <link rel="prev" href="configuration-model.html">
+    <link rel="next" href="protocol-endpoints.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.2">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="./_/css/site.css">
+    <link rel="stylesheet" href="./_/css/vendor/search.css">
+    <link rel="stylesheet" href="./_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="version" content="1.2.0">
+    <meta name="component" content="authorization-server">
+    <link rel="icon" href="./_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img
+          id="springlogo"
+          class="block"
+          src="./_/img/spring-logo.svg"
+          alt="Spring"
+        />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              href="https://spring.io/why-spring"
+            >Overview</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/microservices"
+            >Microservices</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/reactive"
+            >Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event
+              Driven</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web
+              Applications</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/serverless"
+            >Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Learn</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/learn">Overview</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/quickstart"
+            >Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects"
+            >Overview</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-boot"
+            >Spring Boot</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-framework"
+            >Spring Framework</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-cloud"
+            >Spring Cloud</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-cloud-dataflow"
+            >Spring Cloud Data Flow</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-data"
+            >Spring Data</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-integration"
+            >Spring Integration</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-batch"
+            >Spring Batch</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-security"
+            >Spring Security</a>
+            <a
+              class="navbar-item navbar-item-special"
+              href="https://spring.io/projects"
+            >View all projects</a>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools 4</a>
+            <a
+              class="navbar-item navbar-item-special-2"
+              href="https://start.spring.io"
+            >Spring Initializr
+              <svg
+                class="external-link-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+              ><polyline
+                  points="15 10.94 15 15 1 15 1 1 5.06 1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                ></polyline><polyline
+                  points="8.93 1 15 1 15 7.07"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                ></polyline><line
+                  x1="15"
+                  y1="1"
+                  x2="8"
+                  y2="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                ></line></svg></a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Academy</a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              href="https://spring.academy/courses"
+            >Courses</a>
+            <a
+              class="navbar-item"
+              href="https://spring.academy/learning-path"
+            >Get Certified</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Support</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/support">Overview</a>
+            <a class="navbar-item" href="https://spring.io/security">Security
+              Advisories</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-community">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              href="https://spring.io/community"
+            >Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/team">Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
+</script><div class="body">
+<div class="nav-container" data-component="authorization-server" data-version="1.2.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring Authorization Server</span>
+  <span class="version">1.2.0-SNAPSHOT</span>
+</div><div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    Search
+    <span class="search-key"></span>
+  </button>
+</div>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="getting-help.html">Getting Help</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="configuration-model.html">Configuration Model</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="core-model-components.html">Core Model / Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="protocol-endpoints.html">Protocol Endpoints</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="how-to.html">How-to Guides</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-ext-grant-type.html">How-to: Implement an Extension Authorization Grant Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-jpa.html">How-to: Implement core services with JPA</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-pkce.html">How-to: Authenticate using a Single Page Application with PKCE</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-social-login.html">How-to: Authenticate using Social Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-userinfo.html">How-to: Customize the OpenID Connect 1.0 UserInfo response</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+        </nav>
+      </div>
+    </div>
+<ul id="nav-versions" class="nav-versions">
+  <li class="component is-current">
+    <a class="title" href="index.html">Spring Authorization Server</a>
+    <ul class="versions">
+      <li class="version is-current is-latest">
+        <a href="index.html">
+          1.2.0-SNAPSHOT<span class="current">current</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>
+    <div class="resize-handle--x"><span></span></div>
+  </aside>
+</div><main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    Search
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Core Model / Components"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+      <div class="edit-this-page"><a href="https://github.com/rwinch/spring-authorization-server/edit/antora/docs/modules/ROOT/pages/core-model-components.adoc">Edit this Page</a></div>
+      </div>
+</aside><div class="doc">
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Spring Authorization Server</a></li>
+    <li><a href="core-model-components.html">Core Model / Components</a></li>
+  </ul>
+</nav>
+<article>
+<h1 id="page-title" class="page">Core Model / Components</h1>
+<div class="sect1">
+<h2 id="registered-client"><a class="anchor" href="#registered-client"></a>RegisteredClient</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <code>RegisteredClient</code> is a representation of a client that is <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-2">registered</a> with the authorization server.
+A client must be registered with the authorization server before it can initiate an authorization grant flow, such as <code>authorization_code</code> or <code>client_credentials</code>.</p>
+</div>
+<div class="paragraph">
+<p>During client registration, the client is assigned a unique <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-2.2">client identifier</a>, (optionally) a client secret (depending on <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-2.1">client type</a>), and metadata associated with its unique client identifier.
+The client&#8217;s metadata can range from human-facing display strings (such as client name) to items specific to a protocol flow (such as the list of valid redirect URIs).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The corresponding client registration model in Spring Security&#8217;s OAuth2 Client support is <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/client/core.html#oauth2Client-client-registration">ClientRegistration</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The primary purpose of a client is to request access to protected resources.
+The client first requests an access token by authenticating with the authorization server and presenting the authorization grant.
+The authorization server authenticates the client and authorization grant, and, if they are valid, issues an access token.
+The client can now request the protected resource from the resource server by presenting the access token.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to configure a <code>RegisteredClient</code> that is allowed to perform the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1">authorization_code grant</a> flow to request an access token:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
+	.clientId("client-a")
+	.clientSecret("{noop}secret")   <i class="conum" data-value="1"></i><b>(1)</b>
+	.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+	.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+	.redirectUri("http://127.0.0.1:8080/authorized")
+	.scope("scope-a")
+	.clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+	.build();</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>{noop}</code> represents the <code>PasswordEncoder</code> id for Spring Security&#8217;s <a href="https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html#authentication-password-storage-dpe">NoOpPasswordEncoder</a>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The corresponding configuration in Spring Security&#8217;s <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/client/index.html">OAuth2 Client support</a> is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          client-a:
+            provider: spring
+            client-id: client-a
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8080/authorized"
+            scope: scope-a
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>RegisteredClient</code> has metadata (attributes) associated with its unique Client Identifier and is defined as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class RegisteredClient implements Serializable {
+	private String id;  <i class="conum" data-value="1"></i><b>(1)</b>
+	private String clientId;    <i class="conum" data-value="2"></i><b>(2)</b>
+	private Instant clientIdIssuedAt;   <i class="conum" data-value="3"></i><b>(3)</b>
+	private String clientSecret;    <i class="conum" data-value="4"></i><b>(4)</b>
+	private Instant clientSecretExpiresAt;  <i class="conum" data-value="5"></i><b>(5)</b>
+	private String clientName;  <i class="conum" data-value="6"></i><b>(6)</b>
+	private Set&lt;ClientAuthenticationMethod&gt; clientAuthenticationMethods;    <i class="conum" data-value="7"></i><b>(7)</b>
+	private Set&lt;AuthorizationGrantType&gt; authorizationGrantTypes;    <i class="conum" data-value="8"></i><b>(8)</b>
+	private Set&lt;String&gt; redirectUris;   <i class="conum" data-value="9"></i><b>(9)</b>
+	private Set&lt;String&gt; postLogoutRedirectUris; <i class="conum" data-value="10"></i><b>(10)</b>
+	private Set&lt;String&gt; scopes; <i class="conum" data-value="11"></i><b>(11)</b>
+	private ClientSettings clientSettings;  <i class="conum" data-value="12"></i><b>(12)</b>
+	private TokenSettings tokenSettings;    <i class="conum" data-value="13"></i><b>(13)</b>
+
+	...
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>id</code>: The ID that uniquely identifies the <code>RegisteredClient</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>clientId</code>: The client identifier.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>clientIdIssuedAt</code>: The time at which the client identifier was issued.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>clientSecret</code>: The client&#8217;s secret. The value should be encoded using Spring Security&#8217;s <a href="https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html#authentication-password-storage-dpe">PasswordEncoder</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>clientSecretExpiresAt</code>: The time at which the client secret expires.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>clientName</code>: A descriptive name used for the client. The name may be used in certain scenarios, such as when displaying the client name in the consent page.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>clientAuthenticationMethods</code>: The authentication method(s) that the client may use. The supported values are <code>client_secret_basic</code>, <code>client_secret_post</code>, <a href="https://datatracker.ietf.org/doc/html/rfc7523"><code>private_key_jwt</code></a>, <code>client_secret_jwt</code>, and <code>none</code> <a href="https://datatracker.ietf.org/doc/html/rfc7636">(public clients)</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td><code>authorizationGrantTypes</code>: The <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-1.3">authorization grant type(s)</a> that the client can use. The supported values are <code>authorization_code</code>, <code>client_credentials</code>, <code>refresh_token</code>, and <code>urn:ietf:params:oauth:grant-type:device_code</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><code>redirectUris</code>: The registered <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2">redirect URI(s)</a> that the client may use in redirect-based flows – for example, <code>authorization_code</code> grant.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td><code>postLogoutRedirectUris</code>: The post logout redirect URI(s) that the client may use for logout.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td><code>scopes</code>: The scope(s) that the client is allowed to request.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td><code>clientSettings</code>: The custom settings for the client – for example, require <a href="https://datatracker.ietf.org/doc/html/rfc7636">PKCE</a>, require authorization consent, and others.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td><code>tokenSettings</code>: The custom settings for the OAuth2 tokens issued to the client – for example, access/refresh token time-to-live, reuse refresh tokens, and others.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="registered-client-repository"><a class="anchor" href="#registered-client-repository"></a>RegisteredClientRepository</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>RegisteredClientRepository</code> is the central component where new clients can be registered and existing clients can be queried.
+It is used by other components when following a specific protocol flow, such as client authentication, authorization grant processing, token introspection, dynamic client registration, and others.</p>
+</div>
+<div class="paragraph">
+<p>The provided implementations of <code>RegisteredClientRepository</code> are <code>InMemoryRegisteredClientRepository</code> and <code>JdbcRegisteredClientRepository</code>.
+The <code>InMemoryRegisteredClientRepository</code> implementation stores <code>RegisteredClient</code> instances in-memory and is recommended <strong>ONLY</strong> to be used during development and testing.
+<code>JdbcRegisteredClientRepository</code> is a JDBC implementation that persists <code>RegisteredClient</code> instances by using <code>JdbcOperations</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>RegisteredClientRepository</code> is a <strong>REQUIRED</strong> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following example shows how to register a <code>RegisteredClientRepository</code> <code>@Bean</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public RegisteredClientRepository registeredClientRepository() {
+	List&lt;RegisteredClient&gt; registrations = ...
+	return new InMemoryRegisteredClientRepository(registrations);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can configure the <code>RegisteredClientRepository</code> through the <a href="configuration-model.html#customizing-the-configuration" class="xref page"><code>OAuth2AuthorizationServerConfigurer</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.registeredClientRepository(registeredClientRepository);
+
+	...
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2AuthorizationServerConfigurer</code> is useful when applying multiple configuration options simultaneously.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-authorization"><a class="anchor" href="#oauth2-authorization"></a>OAuth2Authorization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <code>OAuth2Authorization</code> is a representation of an OAuth2 authorization, which holds state related to the authorization granted to a <a href="#registered-client">client</a>, by the resource owner or itself in the case of the <code>client_credentials</code> authorization grant type.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The corresponding authorization model in Spring Security&#8217;s OAuth2 Client support is <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/client/core.html#oauth2Client-authorized-client">OAuth2AuthorizedClient</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After the successful completion of an authorization grant flow, an <code>OAuth2Authorization</code> is created and associates an <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/core/OAuth2AccessToken.html"><code>OAuth2AccessToken</code></a>, an (optional) <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/core/OAuth2RefreshToken.html"><code>OAuth2RefreshToken</code></a>, and additional state specific to the executed authorization grant type.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/core/OAuth2Token.html"><code>OAuth2Token</code></a> instances associated with an <code>OAuth2Authorization</code> vary, depending on the authorization grant type.</p>
+</div>
+<div class="paragraph">
+<p>For the OAuth2 <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1">authorization_code grant</a>, an <code>OAuth2AuthorizationCode</code>, an <code>OAuth2AccessToken</code>, and an (optional) <code>OAuth2RefreshToken</code> are associated.</p>
+</div>
+<div class="paragraph">
+<p>For the OpenID Connect 1.0 <a href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">authorization_code grant</a>, an <code>OAuth2AuthorizationCode</code>, an <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/core/oidc/OidcIdToken.html"><code>OidcIdToken</code></a>, an <code>OAuth2AccessToken</code>, and an (optional) <code>OAuth2RefreshToken</code> are associated.</p>
+</div>
+<div class="paragraph">
+<p>For the OAuth2 <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">client_credentials grant</a>, only an <code>OAuth2AccessToken</code> is associated.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2Authorization</code> and its attributes are defined as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class OAuth2Authorization implements Serializable {
+	private String id;  <i class="conum" data-value="1"></i><b>(1)</b>
+	private String registeredClientId;  <i class="conum" data-value="2"></i><b>(2)</b>
+	private String principalName;   <i class="conum" data-value="3"></i><b>(3)</b>
+	private AuthorizationGrantType authorizationGrantType;  <i class="conum" data-value="4"></i><b>(4)</b>
+	private Set&lt;String&gt; authorizedScopes;   <i class="conum" data-value="5"></i><b>(5)</b>
+	private Map&lt;Class&lt;? extends OAuth2Token&gt;, Token&lt;?&gt;&gt; tokens; <i class="conum" data-value="6"></i><b>(6)</b>
+	private Map&lt;String, Object&gt; attributes; <i class="conum" data-value="7"></i><b>(7)</b>
+
+	...
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>id</code>: The ID that uniquely identifies the <code>OAuth2Authorization</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>registeredClientId</code>: The ID that uniquely identifies the <a href="#registered-client">RegisteredClient</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>principalName</code>: The principal name of the resource owner (or client).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authorizationGrantType</code>: The <code>AuthorizationGrantType</code> used.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>authorizedScopes</code>: The <code>Set</code> of scope(s) authorized for the client.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>tokens</code>: The <code>OAuth2Token</code> instances (and associated metadata) specific to the executed authorization grant type.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>attributes</code>: The additional attributes specific to the executed authorization grant type – for example, the authenticated <code>Principal</code>, <code>OAuth2AuthorizationRequest</code>, and others.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2Authorization</code> and its associated <code>OAuth2Token</code> instances have a set lifespan.
+A newly issued <code>OAuth2Token</code> is active and becomes inactive when it either expires or is invalidated (revoked).
+The <code>OAuth2Authorization</code> is (implicitly) inactive when all associated <code>OAuth2Token</code> instances are inactive.
+Each <code>OAuth2Token</code> is held in an <code>OAuth2Authorization.Token</code>, which provides accessors for <code>isExpired()</code>, <code>isInvalidated()</code>, and <code>isActive()</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2Authorization.Token</code> also provides <code>getClaims()</code>, which returns the claims (if any) associated with the <code>OAuth2Token</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-authorization-service"><a class="anchor" href="#oauth2-authorization-service"></a>OAuth2AuthorizationService</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>OAuth2AuthorizationService</code> is the central component where new authorizations are stored and existing authorizations are queried.
+It is used by other components when following a specific protocol flow – for example, client authentication, authorization grant processing, token introspection, token revocation, dynamic client registration, and others.</p>
+</div>
+<div class="paragraph">
+<p>The provided implementations of <code>OAuth2AuthorizationService</code> are <code>InMemoryOAuth2AuthorizationService</code> and <code>JdbcOAuth2AuthorizationService</code>.
+The <code>InMemoryOAuth2AuthorizationService</code> implementation stores <code>OAuth2Authorization</code> instances in-memory and is recommended <strong>ONLY</strong> to be used during development and testing.
+<code>JdbcOAuth2AuthorizationService</code> is a JDBC implementation that persists <code>OAuth2Authorization</code> instances by using <code>JdbcOperations</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2AuthorizationService</code> is an <strong>OPTIONAL</strong> component and defaults to <code>InMemoryOAuth2AuthorizationService</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following example shows how to register an <code>OAuth2AuthorizationService</code> <code>@Bean</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public OAuth2AuthorizationService authorizationService() {
+	return new InMemoryOAuth2AuthorizationService();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can configure the <code>OAuth2AuthorizationService</code> through the <a href="configuration-model.html#customizing-the-configuration" class="xref page"><code>OAuth2AuthorizationServerConfigurer</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.authorizationService(authorizationService);
+
+	...
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2AuthorizationServerConfigurer</code> is useful when applying multiple configuration options simultaneously.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-authorization-consent"><a class="anchor" href="#oauth2-authorization-consent"></a>OAuth2AuthorizationConsent</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <code>OAuth2AuthorizationConsent</code> is a representation of an authorization "consent" (decision) from an <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1">OAuth2 authorization request flow</a> – for example, the <code>authorization_code</code> grant, which holds the authorities granted to a <a href="#registered-client">client</a> by the resource owner.</p>
+</div>
+<div class="paragraph">
+<p>When authorizing access to a client, the resource owner may grant only a subset of the authorities requested by the client.
+The typical use case is the <code>authorization_code</code> grant flow, in which the client requests scope(s) and the resource owner grants (or denies) access to the requested scope(s).</p>
+</div>
+<div class="paragraph">
+<p>After the completion of an OAuth2 authorization request flow, an <code>OAuth2AuthorizationConsent</code> is created (or updated) and associates the granted authorities with the client and resource owner.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationConsent</code> and its attributes are defined as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public final class OAuth2AuthorizationConsent implements Serializable {
+	private final String registeredClientId;    <i class="conum" data-value="1"></i><b>(1)</b>
+	private final String principalName; <i class="conum" data-value="2"></i><b>(2)</b>
+	private final Set&lt;GrantedAuthority&gt; authorities;    <i class="conum" data-value="3"></i><b>(3)</b>
+
+	...
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>registeredClientId</code>: The ID that uniquely identifies the <a href="#registered-client">RegisteredClient</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>principalName</code>: The principal name of the resource owner.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authorities</code>: The authorities granted to the client by the resource owner. An authority can represent a scope, a claim, a permission, a role, and others.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-authorization-consent-service"><a class="anchor" href="#oauth2-authorization-consent-service"></a>OAuth2AuthorizationConsentService</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>OAuth2AuthorizationConsentService</code> is the central component where new authorization consents are stored and existing authorization consents are queried.
+It is primarily used by components that implement an OAuth2 authorization request flow – for example, the <code>authorization_code</code> grant.</p>
+</div>
+<div class="paragraph">
+<p>The provided implementations of <code>OAuth2AuthorizationConsentService</code> are <code>InMemoryOAuth2AuthorizationConsentService</code> and <code>JdbcOAuth2AuthorizationConsentService</code>.
+The <code>InMemoryOAuth2AuthorizationConsentService</code> implementation stores <code>OAuth2AuthorizationConsent</code> instances in-memory and is recommended <strong>ONLY</strong> for development and testing.
+<code>JdbcOAuth2AuthorizationConsentService</code> is a JDBC implementation that persists <code>OAuth2AuthorizationConsent</code> instances by using <code>JdbcOperations</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2AuthorizationConsentService</code> is an <strong>OPTIONAL</strong> component and defaults to <code>InMemoryOAuth2AuthorizationConsentService</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following example shows how to register an <code>OAuth2AuthorizationConsentService</code> <code>@Bean</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public OAuth2AuthorizationConsentService authorizationConsentService() {
+	return new InMemoryOAuth2AuthorizationConsentService();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can configure the <code>OAuth2AuthorizationConsentService</code> through the <a href="configuration-model.html#customizing-the-configuration" class="xref page"><code>OAuth2AuthorizationServerConfigurer</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.authorizationConsentService(authorizationConsentService);
+
+	...
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2AuthorizationServerConfigurer</code> is useful when applying multiple configuration options simultaneously.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-token-context"><a class="anchor" href="#oauth2-token-context"></a>OAuth2TokenContext</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <code>OAuth2TokenContext</code> is a context object that holds information associated with an <code>OAuth2Token</code> and is used by an <a href="#oauth2-token-generator">OAuth2TokenGenerator</a> and <a href="#oauth2-token-customizer">OAuth2TokenCustomizer</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenContext</code> provides the following accessors:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface OAuth2TokenContext extends Context {
+
+	default RegisteredClient getRegisteredClient() ...  <i class="conum" data-value="1"></i><b>(1)</b>
+
+	default &lt;T extends Authentication&gt; T getPrincipal() ... <i class="conum" data-value="2"></i><b>(2)</b>
+
+	default AuthorizationServerContext getAuthorizationServerContext() ...    <i class="conum" data-value="3"></i><b>(3)</b>
+
+	@Nullable
+	default OAuth2Authorization getAuthorization() ...  <i class="conum" data-value="4"></i><b>(4)</b>
+
+	default Set&lt;String&gt; getAuthorizedScopes() ...   <i class="conum" data-value="5"></i><b>(5)</b>
+
+	default OAuth2TokenType getTokenType() ...  <i class="conum" data-value="6"></i><b>(6)</b>
+
+	default AuthorizationGrantType getAuthorizationGrantType() ...  <i class="conum" data-value="7"></i><b>(7)</b>
+
+	default &lt;T extends Authentication&gt; T getAuthorizationGrant() ...    <i class="conum" data-value="8"></i><b>(8)</b>
+
+	...
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>getRegisteredClient()</code>: The <a href="#registered-client">RegisteredClient</a> associated with the authorization grant.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>getPrincipal()</code>: The <code>Authentication</code> instance of the resource owner (or client).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>getAuthorizationServerContext()</code>: The <a href="configuration-model.html#configuring-authorization-server-settings" class="xref page"><code>AuthorizationServerContext</code></a> object that holds information of the Authorization Server runtime environment.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>getAuthorization()</code>: The <a href="#oauth2-authorization">OAuth2Authorization</a> associated with the authorization grant.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>getAuthorizedScopes()</code>: The scope(s) authorized for the client.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>getTokenType()</code>: The <code>OAuth2TokenType</code> to generate. The supported values are <code>code</code>, <code>access_token</code>, <code>refresh_token</code>, and <code>id_token</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>getAuthorizationGrantType()</code>: The <code>AuthorizationGrantType</code> associated with the authorization grant.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td><code>getAuthorizationGrant()</code>: The <code>Authentication</code> instance used by the <code>AuthenticationProvider</code> that processes the authorization grant.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-token-generator"><a class="anchor" href="#oauth2-token-generator"></a>OAuth2TokenGenerator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <code>OAuth2TokenGenerator</code> is responsible for generating an <code>OAuth2Token</code> from the information contained in the provided <a href="#oauth2-token-context">OAuth2TokenContext</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>OAuth2Token</code> generated primarily depends on the type of <code>OAuth2TokenType</code> specified in the <code>OAuth2TokenContext</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example, when the <code>value</code> for <code>OAuth2TokenType</code> is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>code</code>, then <code>OAuth2AuthorizationCode</code> is generated.</p>
+</li>
+<li>
+<p><code>access_token</code>, then <code>OAuth2AccessToken</code> is generated.</p>
+</li>
+<li>
+<p><code>refresh_token</code>, then <code>OAuth2RefreshToken</code> is generated.</p>
+</li>
+<li>
+<p><code>id_token</code>, then <code>OidcIdToken</code> is generated.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Furthermore, the format of the generated <code>OAuth2AccessToken</code> varies, depending on the <code>TokenSettings.getAccessTokenFormat()</code> configured for the <a href="#registered-client">RegisteredClient</a>.
+If the format is <code>OAuth2TokenFormat.SELF_CONTAINED</code> (the default), then a <code>Jwt</code> is generated.
+If the format is <code>OAuth2TokenFormat.REFERENCE</code>, then an "opaque" token is generated.</p>
+</div>
+<div class="paragraph">
+<p>Finally, if the generated <code>OAuth2Token</code> has a set of claims and implements <code>ClaimAccessor</code>, the claims are made accessible from <a href="#oauth2-authorization">OAuth2Authorization.Token.getClaims()</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>OAuth2TokenGenerator</code> is primarily used by components that implement authorization grant processing – for example, <code>authorization_code</code>, <code>client_credentials</code>, and <code>refresh_token</code>.</p>
+</div>
+<div class="paragraph">
+<p>The provided implementations are <code>OAuth2AccessTokenGenerator</code>, <code>OAuth2RefreshTokenGenerator</code>, and <code>JwtGenerator</code>.
+The <code>OAuth2AccessTokenGenerator</code> generates an "opaque" (<code>OAuth2TokenFormat.REFERENCE</code>) access token, and the <code>JwtGenerator</code> generates a <code>Jwt</code> (<code>OAuth2TokenFormat.SELF_CONTAINED</code>).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2TokenGenerator</code> is an <strong>OPTIONAL</strong> component and defaults to a <code>DelegatingOAuth2TokenGenerator</code> composed of an <code>OAuth2AccessTokenGenerator</code> and <code>OAuth2RefreshTokenGenerator</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a <code>JwtEncoder</code> <code>@Bean</code> or <code>JWKSource&lt;SecurityContext&gt;</code> <code>@Bean</code> is registered, then a <code>JwtGenerator</code> is additionally composed in the <code>DelegatingOAuth2TokenGenerator</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>OAuth2TokenGenerator</code> provides great flexibility, as it can support any custom token format for <code>access_token</code> and <code>refresh_token</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to register an <code>OAuth2TokenGenerator</code> <code>@Bean</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public OAuth2TokenGenerator&lt;?&gt; tokenGenerator() {
+	JwtEncoder jwtEncoder = ...
+	JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
+	OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
+	OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
+	return new DelegatingOAuth2TokenGenerator(
+			jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can configure the <code>OAuth2TokenGenerator</code> through the <a href="configuration-model.html#customizing-the-configuration" class="xref page"><code>OAuth2AuthorizationServerConfigurer</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.tokenGenerator(tokenGenerator);
+
+	...
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>OAuth2AuthorizationServerConfigurer</code> is useful when applying multiple configuration options simultaneously.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-token-customizer"><a class="anchor" href="#oauth2-token-customizer"></a>OAuth2TokenCustomizer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <code>OAuth2TokenCustomizer</code> provides the ability to customize the attributes of an <code>OAuth2Token</code>, which are accessible in the provided <a href="#oauth2-token-context">OAuth2TokenContext</a>.
+It is used by an <a href="#oauth2-token-generator">OAuth2TokenGenerator</a> to let it customize the attributes of the <code>OAuth2Token</code> before it is generated.</p>
+</div>
+<div class="paragraph">
+<p>An <code>OAuth2TokenCustomizer&lt;OAuth2TokenClaimsContext&gt;</code> declared with a generic type of <code>OAuth2TokenClaimsContext</code> (<code>implements OAuth2TokenContext</code>) provides the ability to customize the claims of an "opaque" <code>OAuth2AccessToken</code>.
+<code>OAuth2TokenClaimsContext.getClaims()</code> provides access to the <code>OAuth2TokenClaimsSet.Builder</code>, allowing the ability to add, replace, and remove claims.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to implement an <code>OAuth2TokenCustomizer&lt;OAuth2TokenClaimsContext&gt;</code> and configure it with an <code>OAuth2AccessTokenGenerator</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public OAuth2TokenGenerator&lt;?&gt; tokenGenerator() {
+	JwtEncoder jwtEncoder = ...
+	JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
+	OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
+	accessTokenGenerator.setAccessTokenCustomizer(accessTokenCustomizer());
+	OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
+	return new DelegatingOAuth2TokenGenerator(
+			jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
+}
+
+@Bean
+public OAuth2TokenCustomizer&lt;OAuth2TokenClaimsContext&gt; accessTokenCustomizer() {
+	return context -&gt; {
+		OAuth2TokenClaimsSet.Builder claims = context.getClaims();
+		// Customize claims
+
+	};
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the <code>OAuth2TokenGenerator</code> is not provided as a <code>@Bean</code> or is not configured through the <code>OAuth2AuthorizationServerConfigurer</code>, an <code>OAuth2TokenCustomizer&lt;OAuth2TokenClaimsContext&gt;</code> <code>@Bean</code> will automatically be configured with an <code>OAuth2AccessTokenGenerator</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>An <code>OAuth2TokenCustomizer&lt;JwtEncodingContext&gt;</code> declared with a generic type of <code>JwtEncodingContext</code> (<code>implements OAuth2TokenContext</code>) provides the ability to customize the headers and claims of a <code>Jwt</code>.
+<code>JwtEncodingContext.getHeaders()</code> provides access to the <code>JwsHeader.Builder</code>, allowing the ability to add, replace, and remove headers.
+<code>JwtEncodingContext.getClaims()</code> provides access to the <code>JwtClaimsSet.Builder</code>, allowing the ability to add, replace, and remove claims.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to implement an <code>OAuth2TokenCustomizer&lt;JwtEncodingContext&gt;</code> and configure it with a <code>JwtGenerator</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public OAuth2TokenGenerator&lt;?&gt; tokenGenerator() {
+	JwtEncoder jwtEncoder = ...
+	JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
+	jwtGenerator.setJwtCustomizer(jwtCustomizer());
+	OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
+	OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
+	return new DelegatingOAuth2TokenGenerator(
+			jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
+}
+
+@Bean
+public OAuth2TokenCustomizer&lt;JwtEncodingContext&gt; jwtCustomizer() {
+	return context -&gt; {
+		JwsHeader.Builder headers = context.getHeaders();
+		JwtClaimsSet.Builder claims = context.getClaims();
+		if (context.getTokenType().equals(OAuth2TokenType.ACCESS_TOKEN)) {
+			// Customize headers/claims for access_token
+
+		} else if (context.getTokenType().getValue().equals(OidcParameterNames.ID_TOKEN)) {
+			// Customize headers/claims for id_token
+
+		}
+	};
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the <code>OAuth2TokenGenerator</code> is not provided as a <code>@Bean</code> or is not configured through the <code>OAuth2AuthorizationServerConfigurer</code>, an <code>OAuth2TokenCustomizer&lt;JwtEncodingContext&gt;</code> <code>@Bean</code> will automatically be configured with a <code>JwtGenerator</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+For an example showing how you can <a href="guides/how-to-userinfo.html#customize-id-token" class="xref page">customize the ID token</a>, see the guide <a href="guides/how-to-userinfo.html" class="xref page">How-to: Customize the OpenID Connect 1.0 UserInfo response</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="session-registry"><a class="anchor" href="#session-registry"></a>SessionRegistry</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If OpenID Connect 1.0 is enabled, a <code>SessionRegistry</code> instance is used to track authenticated sessions.
+The <code>SessionRegistry</code> is used by the default implementation of <code>SessionAuthenticationStrategy</code> associated to the <a href="protocol-endpoints.html#oauth2-authorization-endpoint" class="xref page">OAuth2 Authorization Endpoint</a> for registering new authenticated sessions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a <code>SessionRegistry</code> <code>@Bean</code> is not registered, the default implementation <code>SessionRegistryImpl</code> will be used.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+If a <code>SessionRegistry</code> <code>@Bean</code> is registered and is an instance of <code>SessionRegistryImpl</code>, a <code>HttpSessionEventPublisher</code> <code>@Bean</code> <strong>SHOULD</strong> also be registered as it&#8217;s responsible for notifying <code>SessionRegistryImpl</code> of session lifecycle events, for example, <code>SessionDestroyedEvent</code>, to provide the ability to remove the <code>SessionInformation</code> instance.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When a logout is requested by an End-User, the <a href="protocol-endpoints.html#oidc-logout-endpoint" class="xref page">OpenID Connect 1.0 Logout Endpoint</a> uses the <code>SessionRegistry</code> to lookup the <code>SessionInformation</code> associated to the authenticated End-User to perform the logout.</p>
+</div>
+<div class="paragraph">
+<p>If Spring Security&#8217;s <a href="https://docs.spring.io/spring-security/reference/servlet/authentication/session-management.html#ns-concurrent-sessions">Concurrent Session Control</a> feature is being used, it is <strong>RECOMMENDED</strong> to register a <code>SessionRegistry</code> <code>@Bean</code> to ensure it&#8217;s shared between Spring Security&#8217;s Concurrent Session Control and Spring Authorization Server&#8217;s Logout feature.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to register a <code>SessionRegistry</code> <code>@Bean</code> and <code>HttpSessionEventPublisher</code> <code>@Bean</code> (required by <code>SessionRegistryImpl</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SessionRegistry sessionRegistry() {
+	return new SessionRegistryImpl();
+}
+
+@Bean
+public HttpSessionEventPublisher httpSessionEventPublisher() {
+	return new HttpSessionEventPublisher();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="configuration-model.html">Configuration Model</a></span>
+  <span class="next"><a href="protocol-endpoints.html">Protocol Endpoints</a></span>
+</nav>
+</article>
+</div>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="./_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">© <script>var d = new Date();
+        document.write(d.getFullYear());</script> <a href="https://www.vmware.com/">VMware</a>, Inc. or its affiliates. <a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="Github"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="./_/js/site.js"></script>
+<script async src="./_/js/vendor/highlight.js"></script>
+<script async src="./_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="./_/img/algolia-light.svg" />
+                        <img class="dark" width="140" src="./_/img/algolia-dark.svg" />
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="./_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="9d489079e5ec46dbb238909fee5c9c29" data-index-name="springsecurity" data-stylesheet="./_/css/vendor/search.css" data-page-version="1.2.0"></script>
+
+  </body>
+</html>

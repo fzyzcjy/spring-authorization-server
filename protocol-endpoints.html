@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Protocol Endpoints :: Spring Authorization Server</title>
+    <link rel="prev" href="core-model-components.html">
+    <link rel="next" href="how-to.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.2">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="./_/css/site.css">
+    <link rel="stylesheet" href="./_/css/vendor/search.css">
+    <link rel="stylesheet" href="./_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="version" content="1.2.0">
+    <meta name="component" content="authorization-server">
+    <link rel="icon" href="./_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img
+          id="springlogo"
+          class="block"
+          src="./_/img/spring-logo.svg"
+          alt="Spring"
+        />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              href="https://spring.io/why-spring"
+            >Overview</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/microservices"
+            >Microservices</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/reactive"
+            >Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event
+              Driven</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web
+              Applications</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/serverless"
+            >Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Learn</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/learn">Overview</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/quickstart"
+            >Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects"
+            >Overview</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-boot"
+            >Spring Boot</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-framework"
+            >Spring Framework</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-cloud"
+            >Spring Cloud</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-cloud-dataflow"
+            >Spring Cloud Data Flow</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-data"
+            >Spring Data</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-integration"
+            >Spring Integration</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-batch"
+            >Spring Batch</a>
+            <a
+              class="navbar-item"
+              href="https://spring.io/projects/spring-security"
+            >Spring Security</a>
+            <a
+              class="navbar-item navbar-item-special"
+              href="https://spring.io/projects"
+            >View all projects</a>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools 4</a>
+            <a
+              class="navbar-item navbar-item-special-2"
+              href="https://start.spring.io"
+            >Spring Initializr
+              <svg
+                class="external-link-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+              ><polyline
+                  points="15 10.94 15 15 1 15 1 1 5.06 1"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                ></polyline><polyline
+                  points="8.93 1 15 1 15 7.07"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                ></polyline><line
+                  x1="15"
+                  y1="1"
+                  x2="8"
+                  y2="8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                ></line></svg></a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Academy</a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              href="https://spring.academy/courses"
+            >Courses</a>
+            <a
+              class="navbar-item"
+              href="https://spring.academy/learning-path"
+            >Get Certified</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Support</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/support">Overview</a>
+            <a class="navbar-item" href="https://spring.io/security">Security
+              Advisories</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-community">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              href="https://spring.io/community"
+            >Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/team">Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
+</script><div class="body">
+<div class="nav-container" data-component="authorization-server" data-version="1.2.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring Authorization Server</span>
+  <span class="version">1.2.0-SNAPSHOT</span>
+</div><div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    Search
+    <span class="search-key"></span>
+  </button>
+</div>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="getting-help.html">Getting Help</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="configuration-model.html">Configuration Model</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="core-model-components.html">Core Model / Components</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="protocol-endpoints.html">Protocol Endpoints</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="how-to.html">How-to Guides</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-ext-grant-type.html">How-to: Implement an Extension Authorization Grant Type</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-jpa.html">How-to: Implement core services with JPA</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-pkce.html">How-to: Authenticate using a Single Page Application with PKCE</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-social-login.html">How-to: Authenticate using Social Login</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="guides/how-to-userinfo.html">How-to: Customize the OpenID Connect 1.0 UserInfo response</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+        </nav>
+      </div>
+    </div>
+<ul id="nav-versions" class="nav-versions">
+  <li class="component is-current">
+    <a class="title" href="index.html">Spring Authorization Server</a>
+    <ul class="versions">
+      <li class="version is-current is-latest">
+        <a href="index.html">
+          1.2.0-SNAPSHOT<span class="current">current</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>
+    <div class="resize-handle--x"><span></span></div>
+  </aside>
+</div><main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    Search
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Protocol Endpoints"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+      <div class="edit-this-page"><a href="https://github.com/rwinch/spring-authorization-server/edit/antora/docs/modules/ROOT/pages/protocol-endpoints.adoc">Edit this Page</a></div>
+      </div>
+</aside><div class="doc">
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Spring Authorization Server</a></li>
+    <li><a href="protocol-endpoints.html">Protocol Endpoints</a></li>
+  </ul>
+</nav>
+<article>
+<h1 id="page-title" class="page">Protocol Endpoints</h1>
+<div class="sect1">
+<h2 id="oauth2-authorization-endpoint"><a class="anchor" href="#oauth2-authorization-endpoint"></a>OAuth2 Authorization Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2AuthorizationEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.1">OAuth2 Authorization endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1">OAuth2 authorization requests</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.authorizationEndpoint(authorizationEndpoint -&gt;
+			authorizationEndpoint
+				.authorizationRequestConverter(authorizationRequestConverter)   <i class="conum" data-value="1"></i><b>(1)</b>
+				.authorizationRequestConverters(authorizationRequestConvertersConsumer) <i class="conum" data-value="2"></i><b>(2)</b>
+				.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+				.authenticationProviders(authenticationProvidersConsumer)   <i class="conum" data-value="4"></i><b>(4)</b>
+				.authorizationResponseHandler(authorizationResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+				.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+				.consentPage("/oauth2/v1/authorize")    <i class="conum" data-value="7"></i><b>(7)</b>
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>authorizationRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1">OAuth2 authorization request</a> (or consent) from <code>HttpServletRequest</code> to an instance of <code>OAuth2AuthorizationCodeRequestAuthenticationToken</code> or <code>OAuth2AuthorizationConsentAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>authorizationRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OAuth2AuthorizationCodeRequestAuthenticationToken</code> or <code>OAuth2AuthorizationConsentAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>authorizationResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OAuth2AuthorizationCodeRequestAuthenticationToken</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2">OAuth2AuthorizationResponse</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthorizationCodeRequestAuthenticationException</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2.1">OAuth2Error response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>consentPage()</code>: The <code>URI</code> of the custom consent page to redirect resource owners to if consent is required during the authorization request flow.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationEndpointConfigurer</code> configures the <code>OAuth2AuthorizationEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2AuthorizationEndpointFilter</code> is the <code>Filter</code> that processes OAuth2 authorization requests (and consents).</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;A <code>DelegatingAuthenticationConverter</code> composed of <code>OAuth2AuthorizationCodeRequestAuthenticationConverter</code> and <code>OAuth2AuthorizationConsentAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OAuth2AuthorizationCodeRequestAuthenticationProvider</code> and <code>OAuth2AuthorizationConsentAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OAuth2AuthorizationCodeRequestAuthenticationToken</code> and returns the <code>OAuth2AuthorizationResponse</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthorizationCodeRequestAuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="oauth2-authorization-endpoint-customizing-authorization-request-validation"><a class="anchor" href="#oauth2-authorization-endpoint-customizing-authorization-request-validation"></a>Customizing Authorization Request Validation</h3>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationCodeRequestAuthenticationValidator</code> is the default validator used for validating specific OAuth2 authorization request parameters used in the Authorization Code Grant.
+The default implementation validates the <code>redirect_uri</code> and <code>scope</code> parameters.
+If validation fails, an <code>OAuth2AuthorizationCodeRequestAuthenticationException</code> is thrown.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationCodeRequestAuthenticationProvider</code> provides the ability to override the default authorization request validation by supplying a custom authentication validator of type <code>Consumer&lt;OAuth2AuthorizationCodeRequestAuthenticationContext&gt;</code> to <code>setAuthenticationValidator()</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<code>OAuth2AuthorizationCodeRequestAuthenticationContext</code> holds the <code>OAuth2AuthorizationCodeRequestAuthenticationToken</code>, which contains the OAuth2 authorization request parameters.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+If validation fails, the authentication validator <strong>MUST</strong> throw <code>OAuth2AuthorizationCodeRequestAuthenticationException</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A common use case during the development life cycle phase is to allow for <code>localhost</code> in the <code>redirect_uri</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to configure <code>OAuth2AuthorizationCodeRequestAuthenticationProvider</code> with a custom authentication validator that allows for <code>localhost</code> in the <code>redirect_uri</code> parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.authorizationEndpoint(authorizationEndpoint -&gt;
+			authorizationEndpoint
+				.authenticationProviders(configureAuthenticationValidator())
+		);
+
+	return http.build();
+}
+
+private Consumer&lt;List&lt;AuthenticationProvider&gt;&gt; configureAuthenticationValidator() {
+	return (authenticationProviders) -&gt;
+		authenticationProviders.forEach((authenticationProvider) -&gt; {
+			if (authenticationProvider instanceof OAuth2AuthorizationCodeRequestAuthenticationProvider) {
+				Consumer&lt;OAuth2AuthorizationCodeRequestAuthenticationContext&gt; authenticationValidator =
+					// Override default redirect_uri validator
+					new CustomRedirectUriValidator()
+						// Reuse default scope validator
+						.andThen(OAuth2AuthorizationCodeRequestAuthenticationValidator.DEFAULT_SCOPE_VALIDATOR);
+
+				((OAuth2AuthorizationCodeRequestAuthenticationProvider) authenticationProvider)
+					.setAuthenticationValidator(authenticationValidator);
+			}
+		});
+}
+
+static class CustomRedirectUriValidator implements Consumer&lt;OAuth2AuthorizationCodeRequestAuthenticationContext&gt; {
+
+	@Override
+	public void accept(OAuth2AuthorizationCodeRequestAuthenticationContext authenticationContext) {
+		OAuth2AuthorizationCodeRequestAuthenticationToken authorizationCodeRequestAuthentication =
+			authenticationContext.getAuthentication();
+		RegisteredClient registeredClient = authenticationContext.getRegisteredClient();
+		String requestedRedirectUri = authorizationCodeRequestAuthentication.getRedirectUri();
+
+		// Use exact string matching when comparing client redirect URIs against pre-registered URIs
+		if (!registeredClient.getRedirectUris().contains(requestedRedirectUri)) {
+			OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.INVALID_REQUEST);
+			throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, null);
+		}
+	}
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-device-authorization-endpoint"><a class="anchor" href="#oauth2-device-authorization-endpoint"></a>OAuth2 Device Authorization Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2DeviceAuthorizationEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc8628#section-3.1">OAuth2 Device Authorization endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for OAuth2 device authorization requests.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2DeviceAuthorizationEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.deviceAuthorizationEndpoint(deviceAuthorizationEndpoint -&gt;
+			deviceAuthorizationEndpoint
+				.deviceAuthorizationRequestConverter(deviceAuthorizationRequestConverter) <i class="conum" data-value="1"></i><b>(1)</b>
+				.deviceAuthorizationRequestConverters(deviceAuthorizationRequestConvertersConsumer) <i class="conum" data-value="2"></i><b>(2)</b>
+				.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+				.authenticationProviders(authenticationProvidersConsumer) <i class="conum" data-value="4"></i><b>(4)</b>
+				.deviceAuthorizationResponseHandler(deviceAuthorizationResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+				.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+				.verificationUri("/oauth2/v1/device_verification") <i class="conum" data-value="7"></i><b>(7)</b>
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>deviceAuthorizationRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://datatracker.ietf.org/doc/html/rfc8628#section-3.1">OAuth2 device authorization request</a> from <code>HttpServletRequest</code> to an instance of <code>OAuth2DeviceAuthorizationRequestAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>deviceAuthorizationRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OAuth2DeviceAuthorizationRequestAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>deviceAuthorizationResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OAuth2DeviceAuthorizationRequestAuthenticationToken</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc8628#section-3.2">OAuth2DeviceAuthorizationResponse</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-5.2">OAuth2Error response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>verificationUri()</code>: The <code>URI</code> of the custom end-user verification page to direct resource owners to on a secondary device.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2DeviceAuthorizationEndpointConfigurer</code> configures the <code>OAuth2DeviceAuthorizationEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2DeviceAuthorizationEndpointFilter</code> is the <code>Filter</code> that processes OAuth2 device authorization requests.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2DeviceAuthorizationEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;An <code>OAuth2DeviceAuthorizationRequestAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OAuth2DeviceAuthorizationRequestAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OAuth2DeviceAuthorizationRequestAuthenticationToken</code> and returns the <code>OAuth2DeviceAuthorizationResponse</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-device-verification-endpoint"><a class="anchor" href="#oauth2-device-verification-endpoint"></a>OAuth2 Device Verification Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2DeviceVerificationEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc8628#section-3.3">OAuth2 Device Verification endpoint</a> (or "User Interaction").
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for OAuth2 device verification requests.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2DeviceVerificationEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.deviceVerificationEndpoint(deviceVerificationEndpoint -&gt;
+			deviceVerificationEndpoint
+				.deviceVerificationRequestConverter(deviceVerificationRequestConverter) <i class="conum" data-value="1"></i><b>(1)</b>
+				.deviceVerificationRequestConverters(deviceVerificationRequestConvertersConsumer) <i class="conum" data-value="2"></i><b>(2)</b>
+				.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+				.authenticationProviders(authenticationProvidersConsumer) <i class="conum" data-value="4"></i><b>(4)</b>
+				.deviceVerificationResponseHandler(deviceVerificationResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+				.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+				.consentPage("/oauth2/v1/consent") <i class="conum" data-value="7"></i><b>(7)</b>
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>deviceVerificationRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://datatracker.ietf.org/doc/html/rfc8628#section-3.3">OAuth2 device verification request</a> (or consent) from <code>HttpServletRequest</code> to an instance of <code>OAuth2DeviceVerificationAuthenticationToken</code> or <code>OAuth2DeviceAuthorizationConsentAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>deviceVerificationRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OAuth2DeviceVerificationAuthenticationToken</code> or <code>OAuth2DeviceAuthorizationConsentAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>deviceVerificationResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OAuth2DeviceVerificationAuthenticationToken</code> and directing the resource owner to return to their device.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the error response.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>consentPage()</code>: The <code>URI</code> of the custom consent page to redirect resource owners to if consent is required during the device verification request flow.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2DeviceVerificationEndpointConfigurer</code> configures the <code>OAuth2DeviceVerificationEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2DeviceVerificationEndpointFilter</code> is the <code>Filter</code> that processes OAuth2 device verification requests (and consents).</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2DeviceVerificationEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;A <code>DelegatingAuthenticationConverter</code> composed of <code>OAuth2DeviceVerificationAuthenticationConverter</code> and <code>OAuth2DeviceAuthorizationConsentAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OAuth2DeviceVerificationAuthenticationProvider</code> and <code>OAuth2DeviceAuthorizationConsentAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;A <code>SimpleUrlAuthenticationSuccessHandler</code> that handles an &#8220;authenticated&#8221; <code>OAuth2DeviceVerificationAuthenticationToken</code> and redirects the user to a success page (<code>/?success</code>).</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-token-endpoint"><a class="anchor" href="#oauth2-token-endpoint"></a>OAuth2 Token Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2TokenEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.2">OAuth2 Token endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3">OAuth2 access token requests</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.tokenEndpoint(tokenEndpoint -&gt;
+			tokenEndpoint
+				.accessTokenRequestConverter(accessTokenRequestConverter)   <i class="conum" data-value="1"></i><b>(1)</b>
+				.accessTokenRequestConverters(accessTokenRequestConvertersConsumer) <i class="conum" data-value="2"></i><b>(2)</b>
+				.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+				.authenticationProviders(authenticationProvidersConsumer)   <i class="conum" data-value="4"></i><b>(4)</b>
+				.accessTokenResponseHandler(accessTokenResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+				.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>accessTokenRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3">OAuth2 access token request</a> from <code>HttpServletRequest</code> to an instance of <code>OAuth2AuthorizationGrantAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>accessTokenRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OAuth2AuthorizationGrantAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>accessTokenResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AccessTokenAuthenticationToken</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-5.1"><code>OAuth2AccessTokenResponse</code></a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-5.2">OAuth2Error response</a>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenEndpointConfigurer</code> configures the <code>OAuth2TokenEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2TokenEndpointFilter</code> is the <code>Filter</code> that processes OAuth2 access token requests.</p>
+</div>
+<div class="paragraph">
+<p>The supported <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-1.3">authorization grant types</a> are <code>authorization_code</code>, <code>refresh_token</code>, <code>client_credentials</code>, and <code>urn:ietf:params:oauth:grant-type:device_code</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;A <code>DelegatingAuthenticationConverter</code> composed of <code>OAuth2AuthorizationCodeAuthenticationConverter</code>, <code>OAuth2RefreshTokenAuthenticationConverter</code>, <code>OAuth2ClientCredentialsAuthenticationConverter</code>, and <code>OAuth2DeviceCodeAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OAuth2AuthorizationCodeAuthenticationProvider</code>, <code>OAuth2RefreshTokenAuthenticationProvider</code>, <code>OAuth2ClientCredentialsAuthenticationProvider</code>, and <code>OAuth2DeviceCodeAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an <code>OAuth2AccessTokenAuthenticationToken</code> and returns the <code>OAuth2AccessTokenResponse</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-token-introspection-endpoint"><a class="anchor" href="#oauth2-token-introspection-endpoint"></a>OAuth2 Token Introspection Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2TokenIntrospectionEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc7662#section-2">OAuth2 Token Introspection endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for <a href="https://datatracker.ietf.org/doc/html/rfc7662#section-2.1">OAuth2 introspection requests</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenIntrospectionEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.tokenIntrospectionEndpoint(tokenIntrospectionEndpoint -&gt;
+			tokenIntrospectionEndpoint
+				.introspectionRequestConverter(introspectionRequestConverter)   <i class="conum" data-value="1"></i><b>(1)</b>
+				.introspectionRequestConverters(introspectionRequestConvertersConsumer) <i class="conum" data-value="2"></i><b>(2)</b>
+				.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+				.authenticationProviders(authenticationProvidersConsumer)   <i class="conum" data-value="4"></i><b>(4)</b>
+				.introspectionResponseHandler(introspectionResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+				.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>introspectionRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://datatracker.ietf.org/doc/html/rfc7662#section-2.1">OAuth2 introspection request</a> from <code>HttpServletRequest</code> to an instance of <code>OAuth2TokenIntrospectionAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>introspectionRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OAuth2TokenIntrospectionAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>introspectionResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OAuth2TokenIntrospectionAuthenticationToken</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc7662#section-2.2">OAuth2TokenIntrospection response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc7662#section-2.3">OAuth2Error response</a>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenIntrospectionEndpointConfigurer</code> configures the <code>OAuth2TokenIntrospectionEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2TokenIntrospectionEndpointFilter</code> is the <code>Filter</code> that processes OAuth2 introspection requests.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenIntrospectionEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;An <code>OAuth2TokenIntrospectionAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OAuth2TokenIntrospectionAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OAuth2TokenIntrospectionAuthenticationToken</code> and returns the <code>OAuth2TokenIntrospection</code> response.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-token-revocation-endpoint"><a class="anchor" href="#oauth2-token-revocation-endpoint"></a>OAuth2 Token Revocation Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2TokenRevocationEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc7009#section-2">OAuth2 Token Revocation endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for <a href="https://datatracker.ietf.org/doc/html/rfc7009#section-2.1">OAuth2 revocation requests</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenRevocationEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.tokenRevocationEndpoint(tokenRevocationEndpoint -&gt;
+			tokenRevocationEndpoint
+				.revocationRequestConverter(revocationRequestConverter) <i class="conum" data-value="1"></i><b>(1)</b>
+				.revocationRequestConverters(revocationRequestConvertersConsumer)   <i class="conum" data-value="2"></i><b>(2)</b>
+				.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+				.authenticationProviders(authenticationProvidersConsumer)   <i class="conum" data-value="4"></i><b>(4)</b>
+				.revocationResponseHandler(revocationResponseHandler)   <i class="conum" data-value="5"></i><b>(5)</b>
+				.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>revocationRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://datatracker.ietf.org/doc/html/rfc7009#section-2.1">OAuth2 revocation request</a> from <code>HttpServletRequest</code> to an instance of <code>OAuth2TokenRevocationAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>revocationRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OAuth2TokenRevocationAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>revocationResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OAuth2TokenRevocationAuthenticationToken</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc7009#section-2.2">OAuth2 revocation response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the <a href="https://datatracker.ietf.org/doc/html/rfc7009#section-2.2.1">OAuth2Error response</a>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenRevocationEndpointConfigurer</code> configures the <code>OAuth2TokenRevocationEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2TokenRevocationEndpointFilter</code> is the <code>Filter</code> that processes OAuth2 revocation requests.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2TokenRevocationEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;An <code>OAuth2TokenRevocationAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OAuth2TokenRevocationAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OAuth2TokenRevocationAuthenticationToken</code> and returns the OAuth2 revocation response.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oauth2-authorization-server-metadata-endpoint"><a class="anchor" href="#oauth2-authorization-server-metadata-endpoint"></a>OAuth2 Authorization Server Metadata Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2AuthorizationServerMetadataEndpointConfigurer</code> provides the ability to customize the <a href="https://datatracker.ietf.org/doc/html/rfc8414#section-3">OAuth2 Authorization Server Metadata endpoint</a>.
+It defines an extension point that lets you customize the <a href="https://datatracker.ietf.org/doc/html/rfc8414#section-3.2">OAuth2 Authorization Server Metadata response</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationServerMetadataEndpointConfigurer</code> provides the following configuration option:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.authorizationServerMetadataEndpoint(authorizationServerMetadataEndpoint -&gt;
+			authorizationServerMetadataEndpoint
+				.authorizationServerMetadataCustomizer(authorizationServerMetadataCustomizer));   <i class="conum" data-value="1"></i><b>(1)</b>
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>authorizationServerMetadataCustomizer()</code>: The <code>Consumer</code> providing access to the <code>OAuth2AuthorizationServerMetadata.Builder</code> allowing the ability to customize the claims of the Authorization Server&#8217;s configuration.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationServerMetadataEndpointConfigurer</code> configures the <code>OAuth2AuthorizationServerMetadataEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OAuth2AuthorizationServerMetadataEndpointFilter</code> is the <code>Filter</code> that returns the <a href="https://datatracker.ietf.org/doc/html/rfc8414#section-3.2">OAuth2AuthorizationServerMetadata response</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jwk-set-endpoint"><a class="anchor" href="#jwk-set-endpoint"></a>JWK Set Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OAuth2AuthorizationServerConfigurer</code> provides support for the <a href="https://datatracker.ietf.org/doc/html/rfc7517">JWK Set endpoint</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OAuth2AuthorizationServerConfigurer</code> configures the <code>NimbusJwkSetEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>NimbusJwkSetEndpointFilter</code> is the <code>Filter</code> that returns the <a href="https://datatracker.ietf.org/doc/html/rfc7517#section-5">JWK Set</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The JWK Set endpoint is configured <strong>only</strong> if a <code>JWKSource&lt;SecurityContext&gt;</code> <code>@Bean</code> is registered.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oidc-provider-configuration-endpoint"><a class="anchor" href="#oidc-provider-configuration-endpoint"></a>OpenID Connect 1.0 Provider Configuration Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OidcProviderConfigurationEndpointConfigurer</code> provides the ability to customize the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig">OpenID Connect 1.0 Provider Configuration endpoint</a>.
+It defines an extension point that lets you customize the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse">OpenID Provider Configuration response</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OidcProviderConfigurationEndpointConfigurer</code> provides the following configuration option:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.oidc(oidc -&gt;
+			oidc
+				.providerConfigurationEndpoint(providerConfigurationEndpoint -&gt;
+					providerConfigurationEndpoint
+						.providerConfigurationCustomizer(providerConfigurationCustomizer)   <i class="conum" data-value="1"></i><b>(1)</b>
+				)
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>providerConfigurationCustomizer()</code>: The <code>Consumer</code> providing access to the <code>OidcProviderConfiguration.Builder</code> allowing the ability to customize the claims of the OpenID Provider&#8217;s configuration.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OidcProviderConfigurationEndpointConfigurer</code> configures the <code>OidcProviderConfigurationEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OidcProviderConfigurationEndpointFilter</code> is the <code>Filter</code> that returns the <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse">OidcProviderConfiguration response</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oidc-logout-endpoint"><a class="anchor" href="#oidc-logout-endpoint"></a>OpenID Connect 1.0 Logout Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OidcLogoutEndpointConfigurer</code> provides the ability to customize the <a href="https://openid.net/specs/openid-connect-rpinitiated-1_0.html#RPLogout">OpenID Connect 1.0 Logout endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for RP-Initiated Logout requests.</p>
+</div>
+<div class="paragraph">
+<p><code>OidcLogoutEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.oidc(oidc -&gt;
+			oidc
+				.logoutEndpoint(logoutEndpoint -&gt;
+					logoutEndpoint
+						.logoutRequestConverter(logoutRequestConverter) <i class="conum" data-value="1"></i><b>(1)</b>
+						.logoutRequestConverters(logoutRequestConvertersConsumer)   <i class="conum" data-value="2"></i><b>(2)</b>
+						.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+						.authenticationProviders(authenticationProvidersConsumer)   <i class="conum" data-value="4"></i><b>(4)</b>
+						.logoutResponseHandler(logoutResponseHandler)   <i class="conum" data-value="5"></i><b>(5)</b>
+						.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+				)
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>logoutRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract a <a href="https://openid.net/specs/openid-connect-rpinitiated-1_0.html#RPLogout">Logout request</a> from <code>HttpServletRequest</code> to an instance of <code>OidcLogoutAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>logoutRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OidcLogoutAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>logoutResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OidcLogoutAuthenticationToken</code> and performing the logout.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the error response.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OidcLogoutEndpointConfigurer</code> configures the <code>OidcLogoutEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OidcLogoutEndpointFilter</code> is the <code>Filter</code> that processes <a href="https://openid.net/specs/openid-connect-rpinitiated-1_0.html#RPLogout">RP-Initiated Logout requests</a> and performs the logout of the End-User.</p>
+</div>
+<div class="paragraph">
+<p><code>OidcLogoutEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;An <code>OidcLogoutAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OidcLogoutAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OidcLogoutAuthenticationToken</code> and performs the logout.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>OidcLogoutAuthenticationProvider</code> uses a <a href="core-model-components.html#session-registry" class="xref page"><code>SessionRegistry</code></a> to look up the <code>SessionInformation</code> instance associated to the End-User requesting to be logged out.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<code>OidcClientInitiatedLogoutSuccessHandler</code> is the corresponding configuration in Spring Security’s OAuth2 Client support for configuring <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/login/advanced.html#oauth2login-advanced-oidc-logout">OpenID Connect 1.0 RP-Initiated Logout</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oidc-user-info-endpoint"><a class="anchor" href="#oidc-user-info-endpoint"></a>OpenID Connect 1.0 UserInfo Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OidcUserInfoEndpointConfigurer</code> provides the ability to customize the <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfo">OpenID Connect 1.0 UserInfo endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoRequest">UserInfo requests</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OidcUserInfoEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.oidc(oidc -&gt;
+			oidc
+				.userInfoEndpoint(userInfoEndpoint -&gt;
+					userInfoEndpoint
+						.userInfoRequestConverter(userInfoRequestConverter) <i class="conum" data-value="1"></i><b>(1)</b>
+						.userInfoRequestConverters(userInfoRequestConvertersConsumer) <i class="conum" data-value="2"></i><b>(2)</b>
+						.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+						.authenticationProviders(authenticationProvidersConsumer) <i class="conum" data-value="4"></i><b>(4)</b>
+						.userInfoResponseHandler(userInfoResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+						.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+						.userInfoMapper(userInfoMapper) <i class="conum" data-value="7"></i><b>(7)</b>
+				)
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>userInfoRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract an <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoRequest">UserInfo request</a> from <code>HttpServletRequest</code> to an instance of <code>OidcUserInfoAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>userInfoRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OidcUserInfoAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>userInfoResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OidcUserInfoAuthenticationToken</code> and returning the <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse">UserInfo response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoError">UserInfo Error response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td><code>userInfoMapper()</code>: The <code>Function</code> used to extract claims from <code>OidcUserInfoAuthenticationContext</code> to an instance of <code>OidcUserInfo</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OidcUserInfoEndpointConfigurer</code> configures the <code>OidcUserInfoEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OidcUserInfoEndpointFilter</code> is the <code>Filter</code> that processes <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoRequest">UserInfo requests</a> and returns the <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse">OidcUserInfo response</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OidcUserInfoEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;An internal implementation that obtains the <code>Authentication</code> from the <code>SecurityContext</code> and creates an <code>OidcUserInfoAuthenticationToken</code> with the principal.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OidcUserInfoAuthenticationProvider</code>, which is associated with an internal implementation of <code>userInfoMapper</code> that extracts <a href="https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims">standard claims</a> from the <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDToken">ID Token</a> based on the <a href="https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims">scopes requested</a> during authorization.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OidcUserInfoAuthenticationToken</code> and returns the <code>OidcUserInfo</code> response.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can customize the ID Token by providing an <a href="core-model-components.html#oauth2-token-customizer" class="xref page"><code>OAuth2TokenCustomizer&lt;JwtEncodingContext&gt;</code></a> <code>@Bean</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The OpenID Connect 1.0 UserInfo endpoint is an OAuth2 protected resource, which <strong>REQUIRES</strong> an access token to be sent as a bearer token in the <a href="https://openid.net/specs/openid-connect-core-1_0.html#UserInfoRequest">UserInfo request</a>.
+The following example shows how to enable the OAuth2 resource server configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	...
+
+	http.oauth2ResourceServer(resourceServer -&gt; resourceServer.jwt(Customizer.withDefaults()));
+
+	return http.build();
+}
+
+@Bean
+public JwtDecoder jwtDecoder(JWKSource&lt;SecurityContext&gt; jwkSource) {
+	return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <code>JwtDecoder</code> <code>@Bean</code> is <strong>REQUIRED</strong> for the OpenID Connect 1.0 UserInfo endpoint.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The guide <a href="guides/how-to-userinfo.html" class="xref page">How-to: Customize the OpenID Connect 1.0 UserInfo response</a> contains examples of customizing the UserInfo endpoint.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="oidc-client-registration-endpoint"><a class="anchor" href="#oidc-client-registration-endpoint"></a>OpenID Connect 1.0 Client Registration Endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>OidcClientRegistrationEndpointConfigurer</code> provides the ability to customize the <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ClientRegistration">OpenID Connect 1.0 Client Registration endpoint</a>.
+It defines extension points that let you customize the pre-processing, main processing, and post-processing logic for <a href="https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationRequest">Client Registration requests</a> or <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ReadRequest">Client Read requests</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>OidcClientRegistrationEndpointConfigurer</code> provides the following configuration options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	authorizationServerConfigurer
+		.oidc(oidc -&gt;
+			oidc
+				.clientRegistrationEndpoint(clientRegistrationEndpoint -&gt;
+					clientRegistrationEndpoint
+						.clientRegistrationRequestConverter(clientRegistrationRequestConverter) <i class="conum" data-value="1"></i><b>(1)</b>
+						.clientRegistrationRequestConverters(clientRegistrationRequestConvertersConsumers) <i class="conum" data-value="2"></i><b>(2)</b>
+						.authenticationProvider(authenticationProvider) <i class="conum" data-value="3"></i><b>(3)</b>
+						.authenticationProviders(authenticationProvidersConsumer) <i class="conum" data-value="4"></i><b>(4)</b>
+						.clientRegistrationResponseHandler(clientRegistrationResponseHandler) <i class="conum" data-value="5"></i><b>(5)</b>
+						.errorResponseHandler(errorResponseHandler) <i class="conum" data-value="6"></i><b>(6)</b>
+				)
+		);
+
+	return http.build();
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>clientRegistrationRequestConverter()</code>: Adds an <code>AuthenticationConverter</code> (<em>pre-processor</em>) used when attempting to extract a <a href="https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationRequest">Client Registration request</a> or <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ReadRequest">Client Read request</a> from <code>HttpServletRequest</code> to an instance of <code>OidcClientRegistrationAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>clientRegistrationRequestConverters()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationConverter</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationConverter</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>authenticationProvider()</code>: Adds an <code>AuthenticationProvider</code> (<em>main processor</em>) used for authenticating the <code>OidcClientRegistrationAuthenticationToken</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>authenticationProviders()</code>: Sets the <code>Consumer</code> providing access to the <code>List</code> of default and (optionally) added <code>AuthenticationProvider</code>'s allowing the ability to add, remove, or customize a specific <code>AuthenticationProvider</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>clientRegistrationResponseHandler()</code>: The <code>AuthenticationSuccessHandler</code> (<em>post-processor</em>) used for handling an &#8220;authenticated&#8221; <code>OidcClientRegistrationAuthenticationToken</code> and returning the <a href="https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationResponse">Client Registration response</a> or <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ReadResponse">Client Read response</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>errorResponseHandler()</code>: The <code>AuthenticationFailureHandler</code> (<em>post-processor</em>) used for handling an <code>OAuth2AuthenticationException</code> and returning the <a href="https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationError">Client Registration Error response</a> or <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ReadError">Client Read Error response</a>.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The OpenID Connect 1.0 Client Registration endpoint is disabled by default because many deployments do not require dynamic client registration.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OidcClientRegistrationEndpointConfigurer</code> configures the <code>OidcClientRegistrationEndpointFilter</code> and registers it with the OAuth2 authorization server <code>SecurityFilterChain</code> <code>@Bean</code>.
+<code>OidcClientRegistrationEndpointFilter</code> is the <code>Filter</code> that processes <a href="https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationRequest">Client Registration requests</a> and returns the <a href="https://openid.net/specs/openid-connect-registration-1_0.html#RegistrationResponse">OidcClientRegistration response</a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<code>OidcClientRegistrationEndpointFilter</code> also processes <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ReadRequest">Client Read requests</a> and returns the <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ReadResponse">OidcClientRegistration response</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>OidcClientRegistrationEndpointFilter</code> is configured with the following defaults:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>AuthenticationConverter</strong></code>&#8201;&#8212;&#8201;An <code>OidcClientRegistrationAuthenticationConverter</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationManager</strong></code>&#8201;&#8212;&#8201;An <code>AuthenticationManager</code> composed of <code>OidcClientRegistrationAuthenticationProvider</code> and <code>OidcClientConfigurationAuthenticationProvider</code>.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationSuccessHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that handles an &#8220;authenticated&#8221; <code>OidcClientRegistrationAuthenticationToken</code> and returns the <code>OidcClientRegistration</code> response.</p>
+</li>
+<li>
+<p><code><strong>AuthenticationFailureHandler</strong></code>&#8201;&#8212;&#8201;An internal implementation that uses the <code>OAuth2Error</code> associated with the <code>OAuth2AuthenticationException</code> and returns the <code>OAuth2Error</code> response.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The OpenID Connect 1.0 Client Registration endpoint is an <a href="https://openid.net/specs/openid-connect-registration-1_0.html#ClientRegistration">OAuth2 protected resource</a>, which <strong>REQUIRES</strong> an access token to be sent as a bearer token in the Client Registration (or Client Read) request.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The access token in a Client Registration request <strong>REQUIRES</strong> the OAuth2 scope <code>client.create</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The access token in a Client Read request <strong>REQUIRES</strong> the OAuth2 scope <code>client.read</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following example shows how to enable the OAuth2 resource server configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+		new OAuth2AuthorizationServerConfigurer();
+	http.apply(authorizationServerConfigurer);
+
+	...
+
+	http.oauth2ResourceServer(resourceServer -&gt; resourceServer.jwt(Customizer.withDefaults()));
+
+	return http.build();
+}
+
+@Bean
+public JwtDecoder jwtDecoder(JWKSource&lt;SecurityContext&gt; jwkSource) {
+	return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <code>JwtDecoder</code> <code>@Bean</code> is <strong>REQUIRED</strong> for the OpenID Connect 1.0 Client Registration endpoint.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="core-model-components.html">Core Model / Components</a></span>
+  <span class="next"><a href="how-to.html">How-to Guides</a></span>
+</nav>
+</article>
+</div>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="./_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">© <script>var d = new Date();
+        document.write(d.getFullYear());</script> <a href="https://www.vmware.com/">VMware</a>, Inc. or its affiliates. <a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="Github"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="./_/js/site.js"></script>
+<script async src="./_/js/vendor/highlight.js"></script>
+<script async src="./_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="./_/img/algolia-light.svg" />
+                        <img class="dark" width="140" src="./_/img/algolia-dark.svg" />
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="./_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="9d489079e5ec46dbb238909fee5c9c29" data-index-name="springsecurity" data-stylesheet="./_/css/vendor/search.css" data-page-version="1.2.0"></script>
+
+  </body>
+</html>
